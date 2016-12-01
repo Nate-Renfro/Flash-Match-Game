@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>The Flash Match</title>
+    <style>
+        .txt {color: #ff0000;}
+        img {position: absolute; width:100px; height:100px;}
+        div {position:absolute; width: 500px; height: 500px;}
+        #rightSide {left:515px;}
+        #leftSide { border: 3px solid red}
+        body {animation: flash 3s infinite;}
+        @keyframes flash {0% {background-color: #FFFFFF;} 100% {background-color: #000000;}}
+    </style>
+</head>
+<body onload="faceGen()">
+<table align="center">
+    <tr>
+        <td>
+            <!-- HTML STUFF-->
+            <table align="left" cellpadding="0" cellspacing="0">
+                <!-- Directions -->
+                <tr>
+                    <td align="left">
+                        <table>
+                            <tr>
+                                <td class="txt">
+                                    <h1 align="center">Flash Match!</h1>
+                                    <br>
+                                    Directions:
+                                    <br>
+                                    1. This game works best in full screen mode.
+                                    <br>
+                                    2. Find and click on the extra image on the left side of the line.
+                                    <br>
+                                    3. Failure to click the proper image will result in ending the game.
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <!-- Difficulty Warning -->
+                <tr>
+                    <td class="txt">
+                        <br>!WARNING! THIS GAME CAN GET VERY DIFFICULT !WARNING!
+                    </td>
+                </tr>
+            </table>
+        </td>
+        <td class="right">
+            <!-- AUDIO STUFF -->
+            <table align="center">
+                <tr>
+                    <td align="center">
+                    <audio controls="controls" autoplay><source src="Extras/serenade.mp3" type="audio/mpeg"></audio>
+                    <br>
+                    <label class="txt">Song: Mozart - String Serenade No.13</label>
+                    <br>
+                    <label class="txt">"Eine Kleine Nachtmusik" in G Major,</label>
+                    <br>
+                    <label class="txt">KV525 - 1st Movement</label>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+<table>
+    <tr>
+        <td><label class="txt">Round:</label></td>
+        <td><input name="roundc" type="text" id="count" value="0" size="7px" readonly></td>
+    </tr>
+</table>
+<!-- Game Board DIVs -->
+<table>
+    <tr>
+        <td>
+            <div id="leftSide"></div>
+        </td>
+        <td>
+            <div id="rightSide"></div>
+        </td>
+    </tr>
+</table>
+<br>
+<!-- AUDIO STUFF -->
+
+
+<!--
+<div id="leftSide"></div>
+<div id="rightSide"></div>
+-->
+<!-- JAVA SCRIPT-->
+<script>
+    var numberOfFaces = 5;
+    var lSide = document.getElementById("leftSide");
+    var rSide = document.getElementById("rightSide");
+    var counter = 0;
+
+    function faceGen() {
+        for (var i = 0; i < numberOfFaces; i++) {
+            var top = Math.floor(Math.random() * 401);
+            var left = Math.floor(Math.random() * 401);
+            var Image = document.createElement("img");
+            Image.setAttribute("src", "Extras/genpic.gif");
+            Image.style.top = top + "px";
+            Image.style.left = left + "px";
+            lSide.appendChild(Image);
+            lSideImages = lSide.cloneNode(true);
+            lSideImages.removeChild(lSideImages.lastChild);
+            rSide.appendChild(lSideImages);}
+
+        var body = document.getElementsByTagName("body")[0];
+            lSide.lastChild.onclick = function nextLevel(event) {document.getElementById("count").value = ++counter;
+            event.stopPropagation();
+            while (lSide.firstChild) {lSide.removeChild(lSide.firstChild);}
+            while (rSide.firstChild) {rSide.removeChild(rSide.firstChild);}
+            numberOfFaces += 5;
+            faceGen();};
+            body.onclick = function gameOver() {alert("Game Over! You have failed to click on the correct image. Click ok to refresh");
+            body.onclick = refresh();
+            lSide.lastChild.onclick = null;};
+            function refresh() {location.reload();}}
+</script>
+</body>
+</html>
